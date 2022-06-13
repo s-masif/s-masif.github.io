@@ -6,8 +6,8 @@ main:
   # - title: "Talks"
   #  url: /talks/    
 
-   - title: "Publications"
-     url: /publications/    
+  - title: "Publications"
+    url: /publications/    
     
   # - title: "Portfolio"
   #  url: /portfolio/
@@ -19,4 +19,4 @@ main:
      url: /cv/
     
   # - title: "Guide"
-  #  url: /markdown/
+  #   url: /markdown/
