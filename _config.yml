@@ -85,7 +85,7 @@ author:
   bio              : "MS Student, Dept. of Computer Engineering, Chosun University"
   location         : "Dong-gu, Gwangju, South Korea"
   employer         :
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  pubmed           : # "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : "https://scholar.google.com/citations?user=szpNVYwAAAAJ&hl=en"
   email            : "hudaasiful@gmail.com"
   researchgate     : "https://www.researchgate.net/profile/S-M-Asiful-Huda"
@@ -103,8 +103,8 @@ author:
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
   linkedin         : "https://www.linkedin.com/in/s-m-asiful-huda-538932126"
-  orcid            : "http://orcid.org/yourorcidurl"
-  pinterest        : "https://orcid.org/my-orcid?orcid=0000-0002-7192-1654"
+  orcid            : "https://orcid.org/my-orcid?orcid=0000-0002-7192-1654"
+  pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
