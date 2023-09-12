@@ -1,16 +1,17 @@
 ---
 layout: archive
-title: "Education"
-permalink: /education/
+title: "Work"
+permalink: /work/
 author_profile: true
 ---
 
 ======
-* M.S. in Information Technology, University of Dhaka, Dhaka, Bangladesh, December 2018 <br>
-      Thesis: <a href="https://ieeexplore.ieee.org/document/8843677" target="_blank">Predicting an Effective Android Application Release Based on User Reviews and Ratings</a> <br>
-      Supervisor: <a href="https://sites.google.com/view/saeedsiddik/home">Md Saeed Siddik</a> <br>
-* B.Sc in Computer Science and Engineering, Ahsanullah University of Science & Technology, Dhaka, Bangladesh, April 2016 <br>
-      Project:  Online Restaurant and Food Enquiry System 
+* Software Eng. II in Test at <a href="https://www.infolytx.com/" target="_blank">Infolytx Bangladesh Limited</a>  <br>
+      - Aug 2021 - present <br>
+* SQA Engineer at <a href="https://www.bitmascot.com/" target="_blank">BitMascot</a>  <br>
+      - Dec 2020 - Aug 2021 <br>
+* SQA Engineer at <a href="http://tecbsl.com/" target="_blank">Technology and Business Solutions Ltd</a>  <br>
+      - Sep 2019 - Sep 2020 <br>
 
 
 
