@@ -5,13 +5,13 @@ permalink: /work/
 author_profile: true
 ---
 
-======
+
 * Software Eng. II in Test at <a href="https://www.infolytx.com/" target="_blank">Infolytx Bangladesh Limited</a>  <br>
-      - Aug 2021 - present <br>
+      - (Aug 2021 - present) <br>
 * SQA Engineer at <a href="https://www.bitmascot.com/" target="_blank">BitMascot</a>  <br>
-      - Dec 2020 - Aug 2021 <br>
+      - (Dec 2020 - Aug 2021) <br>
 * SQA Engineer at <a href="http://tecbsl.com/" target="_blank">Technology and Business Solutions Ltd</a>  <br>
-      - Sep 2019 - Sep 2020 <br>
+      - (Sep 2019 - Sep 2020) <br>
 
 
 
