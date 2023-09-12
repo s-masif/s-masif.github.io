@@ -7,10 +7,10 @@ author_profile: true
 
 ======
 * M.S. in Information Technology, University of Dhaka, Dhaka, Bangladesh, December 2018
-      Thesis: <a href="https://ieeexplore.ieee.org/document/8843677" target="_blank">Predicting an Effective Android Application Release Based on User Reviews and Ratings</a>
-      Supervisor: <a href="https://sites.google.com/view/saeedsiddik/home">Md Saeed Siddik</a>
+*       Thesis: <a href="https://ieeexplore.ieee.org/document/8843677" target="_blank">Predicting an Effective Android Application Release Based on User Reviews and Ratings</a>
+*       Supervisor: <a href="https://sites.google.com/view/saeedsiddik/home">Md Saeed Siddik</a>
 * B.Sc in Computer Science and Engineering, Ahsanullah University of Science & Technology, Dhaka, Bangladesh, April 2016
-      Project:  Online Restaurant and Food Enquiry System
+*       Project:  Online Restaurant and Food Enquiry System
 
 
 
