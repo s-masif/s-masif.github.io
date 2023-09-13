@@ -1,16 +1,16 @@
 # main links links
 main:
-  - title: "Experience"
-    url: /experience/
+  - title: "Education"
+    url: /education/
 
-  # - title: "Talks"
-  #   url: /talks/    
+  - title: "Career"
+    url: /work/    
 
   - title: "Publications"
     url: /publications/    
     
-  # - title: "Portfolio"
-  #   url: /portfolio/
+  - title: "Skills"
+    url: /skills/
         
   # - title: "Blog Posts"
   #   url: /year-archive/
@@ -18,5 +18,5 @@ main:
   - title: "CV"
     url: /cv/
     
-  # - title: "Guide"
-  #   url: /markdown/
+  - title: "Interest"
+    url: /interest/
