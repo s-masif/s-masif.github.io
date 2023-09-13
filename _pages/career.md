@@ -8,7 +8,7 @@ author_profile: true
 
 * Researcher at <a href="http://htcore15.dwebs1.kr/" target="_blank">Health Technology Core</a>  <br>
   - April 2023 - present <br>
-* Graduate Research Assistant <a href="https://www.researchgate.net/lab/Mobile-Computing-Lab-Sangman-Moh" target="_blank">Mobile Computing Lab</a>  <br>
+* Graduate Research Assistant at <a href="https://www.researchgate.net/lab/Mobile-Computing-Lab-Sangman-Moh" target="_blank">Mobile Computing Lab</a>  <br>
   - March 2021 -  February 2023 <br>
 * Programmer at <a href="http://tecbsl.com/" target="_blank">Technology and Business Solutions Ltd</a>  <br>
   - October 2019 - February 2021 <br>
