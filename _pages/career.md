@@ -12,8 +12,8 @@ author_profile: true
   - Research on Reinforcement Learning based computation offloading for UAV-assisted edge computing environments <br>
 * Programmer at <a href="http://tecbsl.com/" target="_blank">Technology and Business Solutions Ltd</a> (October 2019 - February 2021) <br>
   - Design, Develop web applications using C#, ASP.NET MVC, HTML, CSS, Javascript  <br>
-  - Add and modify new and exisiting features <br>
-  - Fix exisiting issues <br>
+  - Add and modify new and existing features <br>
+  - Fix existing bugs/issues/recommendations by QA team <br>
   - Optimize database queries <br>
 
 
