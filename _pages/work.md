@@ -6,12 +6,17 @@ author_profile: true
 ---
 
 
-* Software Eng. II in Test at <a href="https://www.infolytx.com/" target="_blank">Infolytx Bangladesh Limited</a>  <br>
-  - Aug 2021 - present <br>
-* SQA Engineer at <a href="https://www.bitmascot.com/" target="_blank">BitMascot</a>  <br>
-  - Dec 2020 - Aug 2021 <br>
-* SQA Engineer at <a href="http://tecbsl.com/" target="_blank">Technology and Business Solutions Ltd</a>  <br>
-  - Sep 2019 - Sep 2020 <br>
+* Software Eng. II in Test at <a href="https://www.infolytx.com/" target="_blank">Infolytx Bangladesh Limited</a> (Aug 2021 - present) <br>
+  - Make well-structured test cases by analyzing requirements and automate them 
+  - Scrape data from websites and organize them in differently formatted files using automation tool 
+  - Performing non-functional tests (e.g security test, load test, performance test 
+* SQA Engineer at <a href="https://www.bitmascot.com/" target="_blank">BitMascot</a>  (Dec 2020 - Aug 2021)
+  - Analyze requirements and make well-structured test cases <br>
+  - Perform functional, regression tests on features like concurrency, automatic billing system <br>
+  - Document system features in the Confluence <br>
+* SQA Engineer at <a href="http://tecbsl.com/" target="_blank">Technology and Business Solutions Ltd</a> (Sep 2019 - Sep 2020) <br>
+  - Perform tests in systems and report bugs in bug tracking systems e.g. JIRA
+  - Writing automation scripts for a large amount of data input
 
 
 
