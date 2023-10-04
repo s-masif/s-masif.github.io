@@ -7,11 +7,11 @@ author_profile: true
 
 
 *  Frontend <br>
-   - C, C++, C#, Python, ASP.NET, ASP.NET MVC, Tensorflow <br>
+   - HTML, CSS, JavaScript (JS), jQuery, Bootstrap, React, Nest.js, Tailwind CSS <br>
 *  Backend <br>
-   - HTML, CSS, JavaScript, Jquery, Bootstrap <br>
+   - C#, Python, ASP.NET, Node.js, Express.js, Django <br>
 *  Database <br>
-   - SQL <br>   
+   - MySQL, PostgreSQL, Microsoft SQL Server, MongoDB, Redis <br>   
 *  AI & Machine Learning <br>
    - Python, Tensorflow, Pytorch, Keras <br>
 *  Cloud <br>
