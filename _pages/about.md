@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-* I am currently working as a Researcher at Healthcare Technology Core, College of Dentistry, Chosun University. Here I am working on the development of XR-based multi-user training platform for clinical practice training using C# and Unity.
+* Hi, I am S M Asiful Huda. I am currently working as a Researcher at Healthcare Technology Core, College of Dentistry, Chosun University. Here I am working on the development of XR-based multi-user training platform for clinical practice training using C# and Unity.
 
 * Before joining here, I completed my MS in Computer Engineering from <a href="https://eng.chosun.ac.kr/eng/index.do" target="_blank">Chosun University</a>, Gwangju, South Korea in February 2023. During this time, I worked as a graduate research assistant in <a href="https://www.researchgate.net/lab/Mobile-Computing-Lab-Sangman-Moh" target="_blank">Mobile Computing Lab</a> under the supervision of Professor <a href="https://scholar.google.com/citations?user=6kVQbNIAAAAJ&hl=en" target="_blank">Sangman Moh</a>.
 
