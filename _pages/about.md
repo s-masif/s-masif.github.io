@@ -18,8 +18,7 @@ redirect_from:
 Updates!
 ======
 - (April 2024) Our survey titled "Survey on computation offloading in UAV-Enabled mobile edge computing" reached 100 citations! 
-- (April 2024) Joined Research Institute for Solar and Sustainable Energies (RISE), Gwangju Institute of Science and Technology (GIST) as a AI Researcher!
-
+- (April 2024) Joined Research Institute for Solar and Sustainable Energies (RISE), Gwangju Institute of Science and Technology (GIST) as an AI Researcher!
 
 
 (Past events)!
