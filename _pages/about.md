@@ -15,7 +15,14 @@ redirect_from:
 * After my master's, I worked as a Researcher at Healthcare Technology Core, South Korea on the development of XR-based multi-user training platform for clinical practice training using C# and Unity.
 
 
-News!
+Updates!
+======
+- (April 2024) Our survey titled "Survey on computation offloading in UAV-Enabled mobile edge computing" reached 100 citations! 
+- (April 2024) Joined Research Institute for Solar and Sustainable Energies (RISE), Gwangju Institute of Science and Technology (GIST) as a AI Researcher!
+
+
+
+(Past events)!
 ======
 - (July 2023) Our DRLCO paper has been accepted to IEEE Access!
 - (April 2023) Started working as a Researcher at Healthcare Technology Core!
