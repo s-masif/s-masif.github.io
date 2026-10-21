@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unlearning by Subtraction: exact federated graph unlearning with two gates</title>
+<meta name="description" content="Closed-form federated graph learning with structural and contribution gates: closing both gates gives a model identical to retraining from scratch.">
+<meta property="og:title" content="Unlearning by Subtraction">
+<meta property="og:description" content="Exact node-, edge- and client-level unlearning for federated graph learning.">
+<meta property="og:image" content="assets/channels.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6f7;--paper:#fbfcfc;--ink:#14212b;--muted:#5a6a76;--rule:#d3dbe0;--struct:#0f7c86;--contrib:#6d3fd6;--forget:#d1246f;--code:#eef2f4;
+  color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f171d;--paper:#141e26;--ink:#e3eaef;--muted:#93a4b1;--rule:#2b3a46;--struct:#3cc3ce;--contrib:#a88bff;--forget:#ff5c9d;--code:#1a2630;color-scheme:dark}
+  img.fig{background:#fbfcfc;border-radius:4px}}
+:root[data-theme="dark"]{--bg:#0f171d;--paper:#141e26;--ink:#e3eaef;--muted:#93a4b1;--rule:#2b3a46;--struct:#3cc3ce;--contrib:#a88bff;--forget:#ff5c9d;--code:#1a2630;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Serif",Georgia,"Times New Roman",serif;font-size:18px;line-height:1.65}
+.sans,h1,h2,h3,nav,.btn,.authors,.affil,table,figcaption,.kicker,.tag,footer{font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--struct)}
+.top{max-width:1100px;margin:0 auto;padding:16px 22px;font-size:14px}
+.top a{color:var(--muted);text-decoration:none}
+.hero{max-width:1100px;margin:0 auto;padding:28px 22px 10px}
+.tag{display:inline-block;font-size:13px;color:var(--muted);border:1px solid var(--rule);border-radius:4px;padding:2px 8px;margin-bottom:16px}
+h1{font-size:clamp(34px,5.6vw,62px);line-height:1.04;letter-spacing:-.025em;font-weight:700;margin:0 0 6px;max-width:16ch}
+.subtitle{font-family:"IBM Plex Sans",sans-serif;font-size:clamp(18px,2.2vw,23px);color:var(--muted);margin:0 0 22px;max-width:44ch;line-height:1.35}
+.authors{font-size:17px;margin:0}
+.authors span{white-space:nowrap}
+.affil{font-size:14px;color:var(--muted);margin:4px 0 20px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;text-decoration:none;color:var(--paper);background:var(--ink);padding:8px 14px;border-radius:6px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn[aria-disabled="true"]{opacity:.55;cursor:default}
+.demo{max-width:1240px;margin:22px auto 0;padding:0 12px}
+.demo iframe{width:100%;height:1010px;border:1px solid var(--rule);border-radius:8px;background:var(--paper)}
+.demo p{font-family:"IBM Plex Sans",sans-serif;font-size:14px;color:var(--muted);max-width:1100px;margin:8px auto 0;padding:0 10px}
+main{max-width:780px;margin:0 auto;padding:10px 22px 40px}
+.tldr{margin:44px 0 10px;padding:18px 22px;border-left:4px solid var(--contrib);background:var(--paper);border-radius:0 6px 6px 0}
+.tldr strong{font-family:"IBM Plex Sans",sans-serif}
+h2{font-size:30px;line-height:1.15;letter-spacing:-.015em;margin:58px 0 12px;font-weight:700}
+h2 .n{color:var(--muted);font-weight:500;margin-right:10px}
+h3{font-size:19px;margin:30px 0 6px;font-weight:600}
+p{margin:0 0 16px}
+.wide{width:min(1100px,94vw);position:relative;left:50%;transform:translateX(-50%);margin:22px 0 28px}
+figure{margin:0}
+img.fig{width:100%;height:auto;display:block}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.math{font-family:"IBM Plex Serif",serif;font-style:italic;text-align:center;font-size:21px;margin:18px 0 20px;padding:14px;background:var(--paper);border:1px solid var(--rule);border-radius:6px;overflow-x:auto}
+.math sub,.math sup{font-size:.7em}
+.callouts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.callout{border-top:3px solid var(--ink);padding-top:10px}
+.callout.s{border-color:var(--struct)}.callout.c{border-color:var(--contrib)}.callout.f{border-color:var(--forget)}
+.callout b{display:block;font-family:"IBM Plex Sans",sans-serif;font-size:30px;line-height:1.1;letter-spacing:-.01em}
+.callout span{font-family:"IBM Plex Sans",sans-serif;font-size:14px;color:var(--muted)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14.5px;font-variant-numeric:tabular-nums}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-weight:600;border-bottom:1.5px solid var(--ink)}
+thead tr.group th{border-bottom:1px solid var(--rule);text-align:center;color:var(--muted);font-weight:500}
+td.best{font-weight:700}
+td.low{color:var(--forget)}
+.note{font-family:"IBM Plex Sans",sans-serif;font-size:14px;color:var(--muted)}
+pre{background:var(--code);border:1px solid var(--rule);border-radius:6px;padding:14px 16px;overflow-x:auto;font-size:13.5px;line-height:1.5}
+.copy{float:right;font-family:"IBM Plex Sans",sans-serif;font-size:13px;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:3px 9px;cursor:pointer}
+svg.diagram{width:100%;height:auto;display:block}
+.diagram text{font-family:"IBM Plex Sans",sans-serif;fill:var(--ink)}
+footer{max-width:780px;margin:0 auto;padding:30px 22px 60px;font-size:14px;color:var(--muted);border-top:1px solid var(--rule)}
+.side{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:16px 18px}
+.sidehead{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.sidehead p{margin:0;font-size:15px;max-width:70ch}
+.sidectl{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--muted)}
+.sidectl select,.sidectl button{font:inherit;font-size:14px;padding:4px 9px;border-radius:5px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);cursor:pointer}
+.sidegrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+.sidegrid svg{width:100%;height:auto;background:var(--bg);border-radius:6px}
+.sidegrid figcaption{font-size:14px;min-height:3em}
+table.explain td,table.explain th{white-space:normal;text-align:left;vertical-align:top}
+table.explain td:first-child{white-space:nowrap}
+.tw{overflow-x:auto;align-self:center}
+ul.lims{padding-left:20px}ul.lims li{margin:0 0 12px}
+ol.refs{font-family:"IBM Plex Sans",sans-serif;font-size:14.5px;padding-left:26px}ol.refs li{margin:0 0 6px}
+@media (max-width:820px){.sidegrid{grid-template-columns:1fr}}
+:focus-visible{outline:2px solid var(--struct);outline-offset:2px}
+@media (max-width:820px){.grid2,.grid3,.callouts{grid-template-columns:1fr}.demo iframe{height:1500px}}
+</style>
+</head>
+<body>
+<div class="top"><a href="/">← s-masif.github.io</a></div>
+
+<header class="hero">
+  <span class="tag">Preprint in preparation, 2026</span>
+  <h1>Unlearning by Subtraction</h1>
+  <p class="subtitle">Exact node-, edge- and client-level unlearning for federated graph learning, with two gates</p>
+  <p class="authors"><span>S M Asiful Huda</span>, <span>Daniela Annunziata</span>, <span>Stefano Izzo</span>, <span>Fabio Giampaolo</span>, <span>Francesco Piccialli</span></p>
+  <p class="affil">University of Naples Federico II, Department of Mathematics and Applications "R. Caccioppoli"</p>
+  <div class="btns">
+    <a class="btn" aria-disabled="true">Paper (coming soon)</a>
+    <a class="btn ghost" aria-disabled="true">Code (coming soon)</a>
+    <a class="btn ghost" href="demo.html">Open the demo full screen</a>
+    <a class="btn ghost" href="#bibtex">BibTeX</a>
+  </div>
+</header>
+
+<section class="demo" aria-label="Interactive demo">
+  <iframe src="demo.html?embed=1" title="Interactive demo: closing two gates on a real deletion request" loading="lazy"></iframe>
+  <p>Interactive demo. Pick a dataset and press Play: a real deletion request (10% of one client's training nodes) is processed one gate at a time. Left, the client's graph; right, every drawn node's output in two dimensions. With both gates closed, every node lands exactly on the position a model retrained from scratch gives it.</p>
+</section>
+
+<main>
+<div class="tldr"><strong>TL;DR.</strong> Approximate unlearning methods for federated graph neural networks hide forgotten data rather than remove it. We instead train the model from additive per-node statistics and give every node, edge and client two gates: one that removes it from the graph before features are averaged, and one that removes its terms from the statistics. Closing both gates yields a model identical to retraining from scratch, on every dataset and request we tested, with accuracy at or above the results reported for the state of the art on six of seven benchmarks.</div>
+
+<h2><span class="n">1</span>Motivation: from suppression to subtraction</h2>
+<p>Federated graph learning trains one model across organisations that each hold part of a graph. When a person or a whole organisation asks to be removed, the model must behave as if their data had never been used, which is the standard set by retraining from scratch. Retraining is slow and needs every client again, so most methods approximate it after training: gradient ascent on the deleted data, fine-tuning on what remains, or editing the model's internal representations.</p>
+<p>Our starting point was one of those methods. GFGU placed gates on a GCN's hidden representations to switch off forgotten nodes and clients. Measured against retraining, it suppressed rather than removed: unlocking the gate brought the forgotten accuracy back, and keeping a node in the graph while gating it left its neighbours further from the retrained model than deleting it outright.</p>
+<div class="wide grid2">
+  <figure><img class="fig" src="assets/fig1_gfgu_motivation.png" alt="Bar charts: gated unlearning stays far from retraining on forget nodes and neighbours" loading="lazy">
+    <figcaption>Gated unlearning (GFGU) versus retraining. Bars show distance to retraining in units of retrain-to-retrain noise (1 = as close as two retrainings are to each other).</figcaption></figure>
+  <figure><img class="fig" src="assets/geometry_oracle.png" alt="Bar chart: removing the true client directions moves the model away from retraining" loading="lazy">
+    <figcaption>Removing a client's directions from a federated GCN's representations, even with oracle knowledge of them (pink), moves the model further from retraining in 23 of 24 cases. Fine-tuning on retained data (teal) helps.</figcaption></figure>
+</div>
+<p>The diagnosis is that a deleted node influences the model through two channels. Its features reach its neighbours through message passing (the structural channel), and its training signal is mixed into the shared weights (the contribution channel). In an iteratively trained network the second channel is entangled: every gradient step mixes every node's influence into every weight, so it cannot be taken out cleanly afterwards, not even by an oracle. That points to a design principle: <em>train the model so that each node's contribution stays a separate, additive term, and give each channel its own gate.</em></p>
+
+<h2><span class="n">2</span>What "closed form" means</h2>
+<p>A traditional GNN is trained iteratively: predict, measure the error, nudge every weight a little, and repeat thousands of times. A closed-form model is trained in one step, by a formula that gives the best weights directly. Ridge regression is the classic example: for features φ and labels y, the best weights are</p>
+<div class="math">W = ( Σ<sub>i</sub> φ<sub>i</sub>φ<sub>i</sub><sup>⊤</sup> + λI )<sup>−1</sup> Σ<sub>i</sub> φ<sub>i</sub> y<sub>i</sub><sup>⊤</sup></div>
+<p>The data enters only through two sums, one term per training node. Removing a node therefore means removing its term and solving again, and the result is mathematically the model that would have been trained without it. Iterative training has no such structure: each node's influence is spread over thousands of steps, each of which depended on all the others.</p>
+<div class="wide side" id="side">
+  <div class="sidehead"><p class="sans"><strong>Try it.</strong> Twelve nodes on a small graph, two classes. Each node's features are averaged with its neighbours' (one hop). Both panels fit the same linear model with the same loss: on the left by gradient steps, on the right in closed form. Click a node to delete it.</p>
+  <div class="sidectl sans"><label>Fine-tuning steps after deletion <select id="ftsteps"><option>5</option><option selected>20</option><option>100</option></select></label><button type="button" id="sreset">Reset</button></div></div>
+  <div class="sidegrid">
+    <figure><svg id="sgd" viewBox="0 0 420 330" role="img" aria-label="Gradient-trained model"></svg><figcaption class="sans"><strong>Trained by gradient steps.</strong> <span id="gdtxt"></span></figcaption></figure>
+    <figure><svg id="scf" viewBox="0 0 420 330" role="img" aria-label="Closed-form model"></svg><figcaption class="sans"><strong>Closed form.</strong> <span id="cftxt"></span></figcaption></figure>
+  </div>
+  <p class="note">Solid line: each model's decision boundary. Dashed line: the model retrained from scratch without the deleted node. Grey arrows: neighbours whose averaged features changed when the node left the graph (the structural channel). This toy model is convex, so fine-tuning would reach the retrained model given enough steps; the federated GNNs we study are not, and in our experiments fine-tuning kept a measurable gap (Section 3, "Why the closed form is essential").</p>
+</div>
+
+<h2><span class="n">3</span>Method in detail</h2>
+<h3>Step 1: features without training</h3>
+<p>Each client computes, on its own subgraph, a feature vector φ for every node: the node's own features and the average of its neighbours' features over K hops (K = 1 to 3, as in SGC and SIGN), optionally passed through a fixed random nonlinear layer that helps on heterophilous graphs. Nothing here is learned from data, so nothing in the features depends on data that may later be deleted.</p>
+<h3>Step 2: what clients share</h3>
+<p>Each client sends two tables computed over its training nodes, once:</p>
+<div class="wide tablewrap"><table class="explain"><thead><tr><th>Table</th><th>Size</th><th>What one entry means</th><th>What it reveals in aggregate</th></tr></thead><tbody>
+<tr><td>G<sub>k</sub> = Σ φ<sub>i</sub>φ<sub>i</sub><sup>⊤</sup></td><td>d × d</td><td>how strongly features a and b occur together, summed over the client's training nodes</td><td>the number of training nodes, feature co-occurrence, and the space the training nodes span</td></tr>
+<tr><td>B<sub>k</sub> = Σ φ<sub>i</sub>y<sub>i</sub><sup>⊤</sup></td><td>d × C</td><td>column c is the sum of the feature vectors of the client's training nodes in class c</td><td>how many training nodes each class has, and each class's average features</td></tr>
+</tbody></table></div>
+<p><strong class="sans">A three-node example.</strong> With features (1, 0, 1), (0, 1, 1) and (1, 1, 1), where the last entry is a constant and nodes 1 and 3 are in class 1, G has 3 in its bottom-right corner (three training nodes), and B's constant row reads (2, 1): two nodes in class 1, one in class 2. The server adds every client's tables and solves for W once. Removing a client means dropping its tables; removing a node means the owning client re-sends its tables without that node, with its neighbours' rows recomputed.</p>
+<div class="wide tablewrap"><table class="explain"><thead><tr><th></th><th>Federated GCN (FedAvg)</th><th>Ours (closed form, two gates)</th></tr></thead><tbody>
+<tr><td>What is trained</td><td>weights inside every message-passing layer</td><td>one linear classifier; message passing is a fixed recipe</td></tr>
+<tr><td>What clients send</td><td>model updates, every round (e.g. 100 rounds)</td><td>two tables of totals, once</td></tr>
+<tr><td>Communication per client</td><td>Cora 73.8 MB, Photo 38.6 MB, Minesweeper 0.5 MB (100 rounds)</td><td>Cora 4.3 MB, Photo 12.7 MB, Minesweeper 4.5 MB</td></tr>
+<tr><td>Unlearning</td><td>approximate (ascent, fine-tuning, gating) or full retraining</td><td>subtract and re-solve; identical to retraining</td></tr>
+<tr><td>Client needed online to forget it?</td><td>usually, for its data</td><td>no: the server drops its totals</td></tr>
+<tr><td>Expressiveness</td><td>learned, nonlinear message passing</td><td>fixed propagation plus a linear classifier</td></tr>
+</tbody></table></div>
+<h3>Step 3: two gates</h3>
+<p>Every node, edge and client carries two gates, one per channel of influence:</p>
+<div class="wide">
+<svg class="diagram" viewBox="0 0 1100 250" role="img" aria-label="Pipeline: client graph, structural gate, features, contribution gate, shared statistics, server solve, model">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>
+  <g style="color:var(--muted)">
+    <rect x="10" y="40" width="190" height="150" rx="8" fill="var(--paper)" stroke="var(--rule)"/>
+    <text x="105" y="66" text-anchor="middle" font-weight="600" font-size="16">Client subgraph</text>
+    <g stroke="var(--muted)" stroke-width="1.4"><line x1="55" y1="120" x2="100" y2="100"/><line x1="100" y1="100" x2="150" y2="130"/><line x1="100" y1="100" x2="105" y2="160"/><line x1="55" y1="120" x2="105" y2="160"/></g>
+    <line x1="150" y1="130" x2="105" y2="160" stroke="var(--forget)" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <circle cx="55" cy="120" r="8" fill="#56B4E9"/><circle cx="100" cy="100" r="8" fill="#E69F00"/><circle cx="105" cy="160" r="8" fill="#56B4E9"/>
+    <circle cx="150" cy="130" r="9" fill="var(--paper)" stroke="var(--forget)" stroke-width="3"/>
+    <rect x="245" y="70" width="150" height="90" rx="8" fill="none" stroke="var(--struct)" stroke-width="2.5"/>
+    <text x="320" y="104" text-anchor="middle" font-weight="600" font-size="16" style="fill:var(--struct)">Structural gate</text>
+    <text x="320" y="126" text-anchor="middle" font-size="13">cut the node out</text><text x="320" y="143" text-anchor="middle" font-size="13">before averaging</text>
+    <rect x="440" y="70" width="150" height="90" rx="8" fill="var(--paper)" stroke="var(--rule)"/>
+    <text x="515" y="104" text-anchor="middle" font-weight="600" font-size="16">Node features φ</text>
+    <text x="515" y="126" text-anchor="middle" font-size="13">neighbours recomputed,</text><text x="515" y="143" text-anchor="middle" font-size="13">within K+1 hops</text>
+    <rect x="635" y="70" width="150" height="90" rx="8" fill="none" stroke="var(--contrib)" stroke-width="2.5"/>
+    <text x="710" y="104" text-anchor="middle" font-weight="600" font-size="16" style="fill:var(--contrib)">Contribution gate</text>
+    <text x="710" y="126" text-anchor="middle" font-size="13">remove its terms</text><text x="710" y="143" text-anchor="middle" font-size="13">from G<tspan baseline-shift="sub" font-size="10">k</tspan>, B<tspan baseline-shift="sub" font-size="10">k</tspan></text>
+    <rect x="830" y="40" width="260" height="150" rx="8" fill="var(--paper)" stroke="var(--rule)"/>
+    <text x="960" y="78" text-anchor="middle" font-weight="600" font-size="16">Server</text>
+    <text x="960" y="106" text-anchor="middle" font-size="14">add all clients' totals,</text><text x="960" y="126" text-anchor="middle" font-size="14">solve one equation</text>
+    <text x="960" y="160" text-anchor="middle" font-size="14" font-weight="600">= the retrained model</text>
+    <g stroke="currentColor" stroke-width="1.8" fill="none"><path d="M200 115H240" marker-end="url(#ar)"/><path d="M395 115H435" marker-end="url(#ar)"/><path d="M590 115H630" marker-end="url(#ar)"/><path d="M785 115H825" marker-end="url(#ar)"/></g>
+    <text x="550" y="228" text-anchor="middle" font-size="14">Closing a client's gate: the server drops its totals. No messages, and the client need not be online.</text>
+  </g>
+</svg>
+</div>
+<p>The structural gate removes a node from its client's graph before features are averaged, so its neighbours' features are recomputed exactly; deleting a node changes features only within K+1 hops, because removing it also changes its neighbours' degrees. The contribution gate removes the node's terms from the client's tables. Requests can be quarantined first (gates closed, totals kept, so the change can be undone) and erased later (totals deleted). Exactness holds under stated conditions: hyperparameters fixed in advance, random features drawn from a fixed seed, and stored totals actually erased.</p>
+
+<h3>Why the closed form is essential</h3>
+<p>The gates alone are not enough; the closed form is what makes them exact. We trained the same linear model on the same features by federated gradient descent and unlearned by deletion plus fine-tuning. The membership signal of the deleted nodes stayed above the retrained model's, and fine-tuning drifted away from retraining as it continued, while the closed-form model matched retraining exactly.</p>
+<div class="wide"><figure><img class="fig" src="assets/fig5_ablation_training.png" alt="Gradient-trained model drifts from retraining; closed form stays exact" loading="lazy" style="max-width:820px;margin:0 auto"><figcaption style="text-align:center">Same model and features; only the training procedure differs.</figcaption></figure></div>
+
+<h2><span class="n">4</span>Results under PAGE's protocol</h2>
+<p>We follow the benchmark protocol of PAGE (AAAI 2026): Louvain clients with their client counts, 20% of clients removed for client unlearning, and 10% of every client's nodes removed for node unlearning. In every run, our unlearned model equals our retrained model.</p>
+<div class="tablewrap wide"><table><thead><tr class="group"><th></th><th></th><th colspan="4">Client unlearning (20% of clients)</th><th colspan="4">Node unlearning (10% of nodes)</th></tr><tr><th>Dataset</th><th>Clients</th><th>Retrain (rep.)</th><th>PAGE (rep.)</th><th>Ours</th><th>MIA</th><th>Retrain (rep.)</th><th>PAGE (rep.)</th><th>Ours</th><th>MIA</th></tr></thead><tbody><tr><td>Cora</td><td>5</td><td class="best">83.98</td><td>83.91</td><td>83.48</td><td>0.87 → 0.56</td><td>78.65</td><td>81.29</td><td class="best">81.47</td><td>0.87 → 0.48</td></tr><tr><td>PubMed</td><td>5</td><td>83.90</td><td>83.57</td><td class="best">88.40</td><td>0.68 → 0.53</td><td>83.91</td><td>84.39</td><td class="best">88.13</td><td>0.69 → 0.51</td></tr><tr><td>CS</td><td>10</td><td>82.18</td><td>78.66</td><td class="best">93.36</td><td>0.96 → 0.50</td><td>87.74</td><td>88.66</td><td class="best">93.59</td><td>0.92 → 0.51</td></tr><tr><td>Photo</td><td>10</td><td>78.41</td><td>69.73</td><td class="best">90.86</td><td>0.81 → 0.49</td><td>88.62</td><td>88.84</td><td class="best">92.22</td><td>0.87 → 0.59</td></tr><tr><td>Tolokers</td><td>15</td><td>78.52</td><td>78.52</td><td class="best">82.70</td><td>0.61 → 0.52</td><td>78.52</td><td>78.69</td><td class="best">80.22</td><td>0.58 → 0.49</td></tr><tr><td>Minesweeper</td><td>15</td><td>79.88</td><td>80.06</td><td class="best">84.02</td><td>0.53 → 0.50</td><td>79.90</td><td>79.92</td><td class="best">83.56</td><td>0.51 → 0.47</td></tr><tr><td>Amazon-ratings</td><td>20</td><td>41.09</td><td>40.75</td><td class="best">42.33</td><td>0.48 → 0.45</td><td class="best">46.58</td><td>46.21</td><td>42.04</td><td>0.54 → 0.50</td></tr></tbody></table></div>
+<p class="note">Ours: mean over 5 seeds. PAGE and its retrain baseline as reported in their paper (their pipeline, not a paired comparison). MIA: loss-attack AUC on planted canaries, original model → after unlearning; identical to retraining in every run. Bold marks the highest accuracy per row.</p>
+<div class="wide grid2">
+  <figure><img class="fig" src="assets/fig2_page_protocol_accuracy.png" alt="Dot plot: accuracy of our method versus PAGE's reported numbers" loading="lazy"><figcaption>Accuracy after unlearning, 7 datasets.</figcaption></figure>
+  <figure><img class="fig" src="assets/fig3_forgetting_mia.png" alt="Arrows: membership attack AUC drops to the retrained level" loading="lazy"><figcaption>Membership-attack AUC drops to exactly the retrained model's value (open circles).</figcaption></figure>
+</div>
+
+<h2><span class="n">5</span>Why two gates</h2>
+<p>We split the effect of a deletion into its two channels and measured, on eight datasets, how much of retraining's effect each gate recovers alone. The structural channel is under 7% of the change in the shared statistics, yet it accounts for most of the change in the forgotten nodes' direct neighbours. The contribution channel accounts for nearly all of the change on the forgotten nodes and on other clients.</p>
+<div class="wide grid2">
+  <figure><img class="fig" src="assets/channels.png" alt="Bar chart: structural gate recovers neighbours, contribution gate recovers forgotten nodes and other clients" loading="lazy"><figcaption>Share of retraining's effect recovered by each gate alone (bars: mean over 8 datasets; dots: individual datasets).</figcaption></figure>
+  <figure><img class="fig" src="assets/gate_ablation.png" alt="Bar charts: only both gates reach the retrained model" loading="lazy"><figcaption>Gate ablation. One gate alone leaves either the neighbours wrong or the forgotten nodes memorised; only both match retraining.</figcaption></figure>
+</div>
+
+<h2><span class="n">6</span>Robustness</h2>
+<p>Exactness held in every one of 688 recorded checks: deletion ratios up to 50%, 20 mixed requests in a row, edge and feature deletion, different partitions and client counts, single and double precision, and every hyperparameter setting tested.</p>
+<div class="wide"><figure><img class="fig" src="assets/fig11_exactness_matrix.png" alt="Matrix of exactness checks, all passed" loading="lazy" style="max-width:820px;margin:0 auto"><figcaption style="text-align:center">Runs in which unlearning equals retraining from scratch (largest weight difference 0), by experiment and dataset.</figcaption></figure></div>
+<div class="wide grid3">
+  <figure><img class="fig" src="assets/fig6_attacks.png" alt="Three membership attacks drop to the retrained level" loading="lazy"><figcaption>Loss, entropy and offline LiRA attacks all see exactly what they see on the retrained model.</figcaption></figure>
+  <figure><img class="fig" src="assets/fig7_poisoning.png" alt="Unlearning poisoned data restores clean accuracy" loading="lazy"><figcaption>Unlearning poisoned edges or labels restores clean-retrain accuracy exactly.</figcaption></figure>
+  <figure><img class="fig" src="assets/fig4_deletion_ratio.png" alt="Accuracy versus deletion ratio" loading="lazy"><figcaption>Accuracy after deleting up to 50% of nodes or 60% of clients.</figcaption></figure>
+</div>
+<div class="wide"><figure><img class="fig" src="assets/fig8_partition_clients.png" alt="Accuracy versus number of clients for three partitions" loading="lazy" style="max-width:900px;margin:0 auto"><figcaption style="text-align:center">Accuracy versus number of clients. Community (Louvain) clients stay at centralized accuracy; random and label-skewed splits cost accuracy.</figcaption></figure></div>
+
+<h2><span class="n">7</span>Does sharing summed statistics leak more?</h2>
+<p>Yes, at full dimension, and it is worth being precise about how. A client's G<sub>k</sub> pins down the exact space spanned by its training nodes' feature vectors. When a client has fewer training nodes than feature dimensions, a server that knows a candidate node's features can check whether that vector lies inside the space, and so whether the node was trained on. Against this attack the totals leak almost perfectly (AUC 0.99 on Cora), and summing over clients with secure aggregation does not help while the total number of training nodes is below the dimension.</p>
+<p>We compared this with what federated gradient descent shares, on the same model and features. Model updates leak too, increasingly with more rounds, but less: on Cora, 0.97 for our totals against 0.70 for 300 rounds of FedAvg updates, and 0.98 against 0.77 in the one run where FedAvg reached the same accuracy. So the shared statistics do expose more about training membership than gradient updates. Deletion messages are a second channel: an unbatched node deletion reveals that node's row to the server, as comparing models before and after any exact unlearning does.</p>
+<p>What the released model reveals is a separate question. There, at matched membership leakage, our model was more accurate than a federated GCN on Cora (LiRA AUC 0.67 against 0.63, at 82.5% against 71.1% accuracy).</p>
+<p>The protection we use combines secure aggregation with a feature dimension of at most half the number of training nodes, so the training nodes fill the whole space and the attack has nothing to exploit:</p>
+<div class="wide tw" style="max-width:900px"><table><thead><tr><th>Dataset</th><th>Accuracy, unprotected</th><th>Accuracy, protected</th><th>Change</th><th>Server attack AUC (0.5 = chance)</th></tr></thead><tbody><tr><td>Cora</td><td>82.5</td><td>81.9</td><td>-0.6</td><td class="">0.51</td></tr><tr><td>PubMed</td><td>88.3</td><td>88.1</td><td>-0.2</td><td class="low">0.66</td></tr><tr><td>CS</td><td>93.5</td><td>92.9</td><td>-0.5</td><td class="">0.50</td></tr><tr><td>Photo</td><td>91.5</td><td>90.9</td><td>-0.7</td><td class="low">0.64</td></tr><tr><td>Tolokers</td><td>81.5</td><td>81.5</td><td>0.0</td><td class="">0.54</td></tr><tr><td>Minesweeper</td><td>83.8</td><td>83.8</td><td>0.0</td><td class="">0.49</td></tr><tr><td>Amazon-ratings</td><td>42.2</td><td>42.2</td><td>0.0</td><td class="">0.53</td></tr></tbody></table></div>
+<div class="wide"><figure><img class="fig" src="assets/privacy.png" alt="Privacy: accuracy and server-side attack under the protected configuration" loading="lazy" style="max-width:900px;margin:0 auto"><figcaption style="text-align:center">Accuracy cost (left) and server-side membership attack under three views (right): one client's totals without secure aggregation, the protected configuration, and the released model.</figcaption></figure></div>
+<p class="note">The dimension bound is our heuristic, validated against this one attack; it is not a formal guarantee, and PubMed and Photo keep a partial leak because their raw features are sparse. Standard differential privacy on full-dimensional totals collapsed accuracy in our tests (Cora 82.9% to 31.2% at ε = 8); a reduced-dimension private variant is in progress.</p>
+
+<h2><span class="n">8</span>Limitations</h2>
+<ul class="lims">
+<li><strong>Expressiveness.</strong> Message passing is a fixed recipe and only the final classifier is learned. Accuracy is below PAGE's reported numbers on Amazon-ratings at node level (42.0% against 46.6%), and the model is sensitive to the ridge strength λ, which must be chosen on validation data in advance.</li>
+<li><strong>Partitions.</strong> Accuracy holds with community-structured clients but drops with random or label-skewed clients (Cora: 84% with Louvain clients, 64% with 50 random clients).</li>
+<li><strong>Edges between clients.</strong> Clients are disconnected subgraphs. When subgraphs connect, deleting a node also changes features in other clients, which needs a cross-client protocol we have not built.</li>
+<li><strong>Privacy of what is shared.</strong> Without protection, the totals and deletion updates reveal training membership to the server, more than gradient updates do. The protection we use is heuristic, leaves partial leaks on two datasets, and requires secure aggregation; formal differential privacy is not yet viable at full dimension.</li>
+<li><strong>Memorisation of retained data.</strong> Exact unlearning makes the model exactly as private as retraining, no more. The model at its validation-chosen λ is somewhat more exposed to membership attacks than a federated GCN; a larger λ trades accuracy for less exposure.</li>
+<li><strong>Costs.</strong> Communication is lower than FedAvg on Cora and Photo but higher on Minesweeper, where features are tiny, and the server stores d × d totals per client (42 to 252 MB in our runs).</li>
+<li><strong>Scope of the evidence.</strong> All experiments use our own NumPy implementation. The comparison with PAGE uses their reported numbers; a paired comparison with PAGE and GNNDelete on identical splits, and results on ogbn-arxiv, are in progress.</li>
+<li><strong>Conditions for exactness.</strong> Hyperparameters fixed in advance, random features drawn from a fixed seed, honest clients sending correct updates, and stored totals actually erased. Exact unlearning cannot recall models or predictions released before the request.</li>
+<li><strong>Novelty.</strong> Closed-form graph unlearning and closed-form federated unlearning exist separately (references 7 and 8); our contribution is their combination for federated graphs, the two-gate design, and the evidence for why both gates and the closed form are needed.</li>
+</ul>
+
+<h2><span class="n">9</span>References</h2>
+<ol class="refs">
+<li>PAGE: A unified approach for federated graph unlearning. AAAI 2026. <a href="https://arxiv.org/abs/2508.02485">arXiv:2508.02485</a></li>
+<li>T. N. Kipf, M. Welling. Semi-supervised classification with graph convolutional networks. ICLR 2017.</li>
+<li>B. McMahan et al. Communication-efficient learning of deep networks from decentralized data. AISTATS 2017.</li>
+<li>F. Wu et al. Simplifying graph convolutional networks (SGC). ICML 2019.</li>
+<li>F. Frasca et al. SIGN: Scalable inception graph neural networks. arXiv 2020.</li>
+<li>Y. Cao, J. Yang. Towards making systems forget with machine unlearning. IEEE S&amp;P 2015.</li>
+<li>A. Gaur, A. Sharma. Closed-form node classification with exact graph unlearning. Preprint, 2026. <a href="https://arxiv.org/abs/2605.25662">arXiv:2605.25662</a></li>
+<li>Exact federated continual unlearning for ridge heads on frozen foundation models. Preprint, 2026. <a href="https://arxiv.org/abs/2603.12977">arXiv:2603.12977</a></li>
+<li>R. He et al. AFL: A single-round analytic approach for federated learning with pre-trained models. CVPR 2025.</li>
+<li>L. Bourtoule et al. Machine unlearning. IEEE S&amp;P 2021.</li>
+<li>M. Chen et al. Graph unlearning. ACM CCS 2022.</li>
+<li>J. Cheng et al. GNNDelete: A general strategy for unlearning in graph neural networks. ICLR 2023.</li>
+<li>W. Cong, M. Mahdavi. GraphEditor: An efficient graph representation learning and unlearning approach. 2022.</li>
+<li>G. Liu et al. FedEraser: Enabling efficient client-level data removal from federated learning models. IWQoS 2021.</li>
+<li>K. Bonawitz et al. Practical secure aggregation for privacy-preserving machine learning. ACM CCS 2017.</li>
+<li>N. Carlini et al. Membership inference attacks from first principles. IEEE S&amp;P 2022.</li>
+<li>L. Song, P. Mittal. Systematic evaluation of privacy risks of machine learning models. USENIX Security 2021.</li>
+<li>M. Chen et al. When machine unlearning jeopardizes privacy. ACM CCS 2021.</li>
+<li>L. Zhu et al. Deep leakage from gradients. NeurIPS 2019.</li>
+<li>A. Rahimi, B. Recht. Random features for large-scale kernel machines. NeurIPS 2007.</li>
+<li>V. D. Blondel et al. Fast unfolding of communities in large networks (Louvain). J. Stat. Mech. 2008.</li>
+<li>O. Platonov et al. A critical look at the evaluation of GNNs under heterophily. ICLR 2023.</li>
+</ol>
+
+<h2 id="bibtex"><span class="n">10</span>Citation</h2>
+<pre id="bib"><button class="copy" type="button" onclick="navigator.clipboard.writeText(document.getElementById('bibtext').textContent).then(()=>{this.textContent='Copied'})">Copy</button><code id="bibtext">@misc{huda2026unlearning,
+  title  = {Unlearning by Subtraction: Exact Federated Graph Unlearning with Two Gates},
+  author = {Huda, S M Asiful and Annunziata, Daniela and Izzo, Stefano and
+            Giampaolo, Fabio and Piccialli, Francesco},
+  year   = {2026},
+  note   = {Preprint in preparation}
+}</code></pre>
+</main>
+
+<footer>
+  <p>University of Naples Federico II. Figures and numbers on this page are generated from the recorded experiment logs; reported baselines are taken from the cited papers.</p>
+</footer>
+<script>
+(() => {
+  // Toy graph: 12 nodes, 2 classes, raw 2-D features; one-hop mean aggregation; squared loss + ridge.
+  const RAW = [[-1.6,.9],[-1.1,1.5],[-.6,.6],[-1.4,-.2],[-.4,1.4],[-.9,-.5],[1.2,-.8],[.7,-1.4],[1.6,-.2],[.4,-.4],[1.0,.5],[.2,-1.2]];
+  const Y = [1,1,1,1,1,1,-1,-1,-1,-1,-1,-1];
+  const E = [[0,1],[1,2],[0,3],[2,4],[3,5],[2,9],[5,9],[6,7],[6,8],[8,10],[9,11],[7,11],[10,2],[4,1],[9,6]];
+  const LAM = .3, LR = .08, T = 300;
+  let alive = Array(12).fill(true), ft = 20, gdW = null, last = null;
+  const nb = i => E.flatMap(([a, b]) => a === i ? [b] : b === i ? [a] : []).filter(j => alive[j]);
+  const feats = () => RAW.map((x, i) => { if (!alive[i]) return null; const ns = [i, ...nb(i)];
+    return [ns.reduce((s, j) => s + RAW[j][0], 0) / ns.length, ns.reduce((s, j) => s + RAW[j][1], 0) / ns.length, 1]; });
+  const solve3 = (A, b) => { const M = A.map((r, i) => [...r, b[i]]);
+    for (let c = 0; c < 3; c++) { let p = c; for (let r = c + 1; r < 3; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r; [M[c], M[p]] = [M[p], M[c]];
+      for (let r = 0; r < 3; r++) if (r !== c) { const f = M[r][c] / M[c][c]; for (let k = c; k < 4; k++) M[r][k] -= f * M[c][k]; } }
+    return M.map((r, i) => r[3] / r[i]); };
+  const closed = F => { const G = [[0,0,0],[0,0,0],[0,0,0]], B = [0,0,0];
+    F.forEach((f, i) => { if (!f) return; for (let a = 0; a < 3; a++) { B[a] += f[a] * Y[i]; for (let b = 0; b < 3; b++) G[a][b] += f[a] * f[b]; } });
+    for (let a = 0; a < 3; a++) G[a][a] += LAM; return solve3(G, B); };
+  const gd = (F, w0, steps) => { let w = w0.slice(); const n = F.filter(Boolean).length;
+    for (let s = 0; s < steps; s++) { const g = [0,0,0]; F.forEach((f, i) => { if (!f) return; const e = f[0]*w[0] + f[1]*w[1] + f[2]*w[2] - Y[i]; for (let a = 0; a < 3; a++) g[a] += e * f[a] / n; });
+      for (let a = 0; a < 3; a++) w[a] -= LR * (g[a] + LAM * w[a] / n); } return w; };
+  const X0 = -2.4, X1 = 2.4, Y0 = -2.0, Y1 = 2.2, W_ = 420, H_ = 330;
+  const sx = x => (x - X0) / (X1 - X0) * W_, sy = y => H_ - (y - Y0) / (Y1 - Y0) * H_;
+  const NS = 'http://www.w3.org/2000/svg', mk = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const line = (w, svg, attrs) => { // w0 x + w1 y + w2 = 0
+    const pts = []; for (const x of [X0, X1]) if (Math.abs(w[1]) > 1e-9) pts.push([x, -(w[0] * x + w[2]) / w[1]]);
+    if (pts.length === 2) mk('line', {x1: sx(pts[0][0]), y1: sy(pts[0][1]), x2: sx(pts[1][0]), y2: sy(pts[1][1]), ...attrs}, svg); };
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+  function draw(svg, F, w, wRet, Fprev) {
+    svg.innerHTML = ''; const col = i => Y[i] > 0 ? '#E69F00' : '#56B4E9';
+    E.forEach(([a, b]) => { if (alive[a] && alive[b]) mk('line', {x1: sx(F[a][0]), y1: sy(F[a][1]), x2: sx(F[b][0]), y2: sy(F[b][1]), stroke: 'var(--rule)', 'stroke-width': 1.2}, svg); });
+    if (Fprev) F.forEach((f, i) => { const p = Fprev[i]; if (f && p && Math.hypot(f[0] - p[0], f[1] - p[1]) > 1e-6) mk('line', {x1: sx(p[0]), y1: sy(p[1]), x2: sx(f[0]), y2: sy(f[1]), stroke: 'var(--muted)', 'stroke-width': 1.4, 'marker-end': 'url(#arr' + svg.id + ')'}, svg); });
+    const d = mk('defs', {}, svg), m = mk('marker', {id: 'arr' + svg.id, viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 6, markerHeight: 6, orient: 'auto'}, d); mk('path', {d: 'M0,0L10,5L0,10z', fill: 'var(--muted)'}, m);
+    if (wRet) line(wRet, svg, {stroke: 'var(--ink)', 'stroke-width': 1.6, 'stroke-dasharray': '6 5', opacity: .7});
+    line(w, svg, {stroke: svg.id === 'scf' ? 'var(--contrib)' : 'var(--forget)', 'stroke-width': 2.6});
+    RAW.forEach((x, i) => { if (!alive[i]) { if (last === i) mk('circle', {cx: sx(Fprev ? Fprev[i][0] : x[0]), cy: sy(Fprev ? Fprev[i][1] : x[1]), r: 8, fill: 'none', stroke: 'var(--forget)', 'stroke-width': 2, 'stroke-dasharray': '3 2'}, svg); return; }
+      const c = mk('circle', {cx: sx(F[i][0]), cy: sy(F[i][1]), r: 8, fill: col(i), stroke: 'var(--paper)', 'stroke-width': 1.5, tabindex: 0, role: 'button', 'aria-label': 'Delete node ' + (i + 1)}, svg);
+      c.style.cursor = 'pointer'; const del = () => remove(i); c.addEventListener('click', del); c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); del(); } }); });
+  }
+  // stored totals (what the server keeps): G = sum phi phi^T + lam I, B = sum phi y; updated by subtraction
+  let Gs = null, Bs = null;
+  const sums = F => { const G = [[LAM,0,0],[0,LAM,0],[0,0,LAM]], B = [0,0,0];
+    F.forEach((f, i) => { if (!f) return; for (let a = 0; a < 3; a++) { B[a] += f[a] * Y[i]; for (let b = 0; b < 3; b++) G[a][b] += f[a] * f[b]; } }); return [G, B]; };
+  const addTerm = (f, y, s) => { for (let a = 0; a < 3; a++) { Bs[a] += s * f[a] * y; for (let b = 0; b < 3; b++) Gs[a][b] += s * f[a] * f[b]; } };
+  function unlearnBySubtraction(Fprev, F) {
+    Fprev.forEach((p, i) => { if (!p) return; const f = F[i];
+      if (!f) addTerm(p, Y[i], -1);                                        // contribution gate: the deleted node's term
+      else if (Math.hypot(f[0] - p[0], f[1] - p[1]) > 1e-12) { addTerm(p, Y[i], -1); addTerm(f, Y[i], +1); } });  // structural gate: neighbours' rows
+    return solve3(Gs.map(r => r.slice()), Bs.slice());
+  }
+  let wCFcur = null;
+  function render(Fprev) {
+    const F = feats(); if (!Fprev) { [Gs, Bs] = sums(F); wCFcur = solve3(Gs.map(r => r.slice()), Bs.slice()); } else { wCFcur = unlearnBySubtraction(Fprev, F); }
+    const wCF = wCFcur;
+    const wRetGD = Fprev ? gd(F, [0, 0, 0], T) : null;
+    const wRetCF = Fprev ? closed(F) : null;
+    draw(document.getElementById('sgd'), F, gdW, wRetGD, Fprev);
+    draw(document.getElementById('scf'), F, wCF, wRetCF, Fprev);
+    const n = alive.filter(Boolean).length;
+    document.getElementById('gdtxt').textContent = Fprev
+      ? `Deleted node ${last + 1}, then fine-tuned ${ft} steps on the ${n} remaining nodes. Distance to retraining from scratch (${T} steps): ${dist(gdW, wRetGD).toFixed(4)}.`
+      : `${T} gradient steps from zero. Every step used every node, so each node's influence is spread through the whole trajectory. Click a node.`;
+    document.getElementById('cftxt').textContent = Fprev
+      ? `Deleted node ${last + 1}: its term and its neighbours' old rows were subtracted from the stored sums, the neighbours' new rows added, and the model re-solved. Distance to retraining from scratch: ${(() => { const v = dist(wCF, wRetCF); return v < 1e-12 ? (v === 0 ? '0' : v.toExponential(0) + ' (rounding)') : v.toFixed(4); })()}.`
+      : 'One solve from two sums, one term per node. Click a node.';
+  }
+  function remove(i) { if (!alive[i] || alive.filter(Boolean).length <= 4) return; const Fprev = feats(); alive[i] = false; last = i;
+    gdW = gd(feats(), gdW, ft); render(Fprev); }
+  function reset() { alive = Array(12).fill(true); last = null; gdW = gd(feats(), [0, 0, 0], T); render(null); }
+  document.getElementById('ftsteps').onchange = e => { ft = +e.target.value; reset(); };
+  document.getElementById('sreset').onclick = reset;
+  reset();
+})();
+</script>
+</body>
+</html>
