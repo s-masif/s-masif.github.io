@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- TODO: Replace with your paper title and author names (keep anonymous while under double-blind review) -->
+  <meta name="title" content="Exact Federated Graph Unlearning with a Closed-Form Learner and Two Gates">
+  <meta name="description" content="Node- and client-level unlearning in subgraph federated learning that provably equals retraining from scratch, with interactive results on seven benchmarks.">
+  <meta name="keywords" content="federated learning, graph neural networks, machine unlearning, exact unlearning, privacy">
+  <meta name="author" content="Anonymous Authors">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Exact Federated Graph Unlearning with a Closed-Form Learner and Two Gates">
+  <meta property="og:description" content="Unlearning that equals retraining from scratch, for nodes and whole clients of a federated graph.">
+  <!-- TODO: your page URL and a 1200x630 preview image -->
+  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
+  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/overview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Exact Federated Graph Unlearning</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/results.css">
+
+  <script src="static/js/plotly-2.35.2.min.js" charset="utf-8"></script>
+  <script src="static/data/results.js"></script>
+  <script src="static/data/embeddings.js" onerror="window.SITE_EMB = null"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+</head>
+<body>
+
+  <div id="preview-banner" class="notification is-warning is-light has-text-centered" style="display:none; margin:0; border-radius:0;">
+    <strong>Preview data.</strong> These charts were generated from preliminary result files. Regenerate with
+    <code>python export_site_data.py --res results --out site/static/data --embeddings</code> before publishing.
+  </div>
+
+  <!-- ===================================================== hero -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Exact Federated Graph Unlearning<br>with a Closed-Form Learner and Two Gates</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- TODO: authors and affiliations after the review period -->
+              <span class="author-block">Anonymous Authors</span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Under review at PoPETs 2027</span>
+            </div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- TODO: add the links when the paper and code are public -->
+                <span class="link-block"><a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
+                <span class="link-block"><a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a></span>
+                <span class="link-block"><a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a></span>
+                <span class="link-block"><a href="#results" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-chart-bar"></i></span><span>Results</span></a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== key numbers -->
+  <section class="section pt-0">
+    <div class="container is-max-desktop">
+      <div class="columns is-multiline has-text-centered" id="key-numbers"></div>
+    </div>
+  </section>
+
+  <!-- ===================================================== abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>Graph neural networks trained in federated settings retain information about the nodes they were trained on.
+              When a node or a whole client asks to be forgotten, approximate methods leave a trace that can still be
+              detected. We describe a federated graph learner whose unlearning is <em>exact</em>: after a node-level or
+              client-level request, the model equals the model retrained from scratch on the remaining data.</p>
+            <p>Each client computes node features with a fixed propagation that has no trained parameters, and the server
+              fits a ridge classifier from statistics the clients send. Deleting a node on a graph changes two things: its
+              own contribution to the statistics, and the features of its neighbours. A <em>contribution gate</em> and a
+              <em>structural gate</em> handle the two changes; we prove that both are needed and that together they give
+              the retrained model. A node request involves only the client that owns the nodes; a client request needs no
+              message from the removed client.</p>
+            <p>On seven benchmarks, the unlearned model matches retraining up to floating-point rounding in every check,
+              membership attacks on the deleted data give exactly the retrained model's score, and a request takes a
+              fraction of a second. We also measure what the shared statistics reveal, and how much protection a
+              secure-aggregation view provides.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== method -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Method in one figure</h2>
+      <img src="static/images/overview.png" alt="Overview of the method: fixed features, per-client statistics, and the two gates" class="overview-img">
+      <div class="columns mt-4">
+        <div class="column"><div class="box method-box">
+          <p class="heading">Learner</p>
+          <p>Node features &Phi;<sub>k</sub> = [H, &Acirc;H, &hellip;, &Acirc;<sup>L</sup>H, 1] with nothing learned; a ridge
+            classifier W = (&Sigma;S<sub>k</sub> + &gamma;I)<sup>-1</sup>&Sigma;B<sub>k</sub> from per-client statistics.</p>
+        </div></div>
+        <div class="column"><div class="box method-box">
+          <p class="heading">Structural gate</p>
+          <p>Removes the deleted nodes' edges before features are recomputed, so their neighbours get the features they
+            would have after retraining.</p>
+        </div></div>
+        <div class="column"><div class="box method-box">
+          <p class="heading">Contribution gate</p>
+          <p>Leaves the deleted nodes out of the statistics. A client gate drops a whole client's statistics at the
+            server, with no message from it.</p>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== results -->
+  <section class="section hero is-light" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+      <p class="has-text-centered subtitle is-6" id="data-note"></p>
+      <div class="tabs is-centered is-boxed is-small result-tabs" id="result-tabs">
+        <ul>
+          <li class="is-active" data-tab="t-accuracy"><a>Accuracy</a></li>
+          <li data-tab="t-exactness"><a>Exactness</a></li>
+          <li data-tab="t-forgetting"><a>Forgetting</a></li>
+          <li data-tab="t-gates"><a>Why two gates</a></li>
+          <li data-tab="t-robustness"><a>Robustness</a></li>
+          <li data-tab="t-scalability"><a>Scalability</a></li>
+          <li data-tab="t-privacy"><a>Privacy</a></li>
+          <li data-tab="t-representation"><a>Representation space</a></li>
+          <li data-tab="t-motivation"><a>Motivation</a></li>
+        </ul>
+      </div>
+
+      <!-- accuracy -->
+      <div class="tab-pane" id="t-accuracy">
+        <div class="controls">
+          <div class="buttons has-addons" data-group="acc-level">
+            <button class="button is-small is-selected is-dark" data-value="client">Client-level request</button>
+            <button class="button is-small" data-value="node">Node-level request</button>
+          </div>
+          <div class="buttons has-addons dataset-buttons" id="acc-datasets"></div>
+        </div>
+        <div id="chart-accuracy" class="chart"></div>
+        <p class="caption" id="acc-caption"></p>
+        <h4 class="title is-5 mt-5">Gap to each method's own retraining</h4>
+        <div id="chart-gap" class="chart"></div>
+        <p class="caption">Accuracy of the unlearned model minus the accuracy of retraining, in points. Baselines use their
+          reported numbers and the reported retraining; ours compares our unlearned and retrained models (0 in every run).</p>
+        <h4 class="title is-5 mt-5">Per client and with local models</h4>
+        <div id="table-perclient" class="table-container"></div>
+      </div>
+
+      <!-- exactness -->
+      <div class="tab-pane" id="t-exactness" style="display:none">
+        <div class="columns">
+          <div class="column is-7"><div id="chart-exact-hist" class="chart"></div></div>
+          <div class="column"><div id="table-exact-sources" class="table-container"></div></div>
+        </div>
+        <p class="caption">Largest absolute weight difference between the unlearned and the retrained model, over every
+          check in all experiments. Differences come from floating-point rounding: both models compute the same matrix
+          products on differently shaped matrices.</p>
+        <h4 class="title is-5 mt-5">Precision and conditioning (R7)</h4>
+        <div id="table-r7" class="table-container"></div>
+      </div>
+
+      <!-- forgetting -->
+      <div class="tab-pane" id="t-forgetting" style="display:none">
+        <div class="controls">
+          <div class="buttons has-addons" data-group="forget-level">
+            <button class="button is-small is-selected is-dark" data-value="client">Client-level request</button>
+            <button class="button is-small" data-value="node">Node-level request</button>
+          </div>
+        </div>
+        <div id="chart-forgetting" class="chart"></div>
+        <p class="caption">Loss-based membership attack on mislabelled canary nodes (AUC). After unlearning, the score
+          equals the retrained model's score, which is the target (not 0.5).</p>
+        <h4 class="title is-5 mt-5">Three attacks on a node-level request (R6)</h4>
+        <div id="chart-three-attacks" class="chart"></div>
+      </div>
+
+      <!-- gates -->
+      <div class="tab-pane" id="t-gates" style="display:none">
+        <div id="chart-gate-ablation" class="chart"></div>
+        <p class="caption">Gate ablation over eight datasets: largest weight difference to retraining, predictions that
+          differ, and LiRA-style attack AUC on the deleted canaries. Only both gates give the retrained model.</p>
+        <div class="columns mt-4">
+          <div class="column"><div id="chart-jsd-region" class="chart"></div></div>
+          <div class="column"><div id="chart-recovered" class="chart"></div></div>
+        </div>
+        <p class="caption">Left: divergence from the retrained model's predictions, by graph region. Right: the share of
+          the change towards retraining that each gate recovers, by region (1 = all of it).</p>
+        <h4 class="title is-5 mt-5">The same model trained by gradient descent cannot be repaired</h4>
+        <div class="columns">
+          <div class="column"><div id="chart-gd" class="chart"></div></div>
+          <div class="column"><div id="chart-features" class="chart"></div></div>
+        </div>
+        <p class="caption">Left: FedAvg-trained version of our linear model, unlearned by fine-tuning or gradient ascent,
+          against retraining. Right: feature design (test accuracy).</p>
+      </div>
+
+      <!-- robustness -->
+      <div class="tab-pane" id="t-robustness" style="display:none">
+        <div class="controls">
+          <div class="buttons has-addons" data-group="rob-view">
+            <button class="button is-small is-selected is-dark" data-value="ratio">Deletion ratio</button>
+            <button class="button is-small" data-value="sequence">Sequential requests</button>
+            <button class="button is-small" data-value="partitions">Partitions</button>
+            <button class="button is-small" data-value="poisoning">Poisoning</button>
+            <button class="button is-small" data-value="edges">Edges and features</button>
+            <button class="button is-small" data-value="hyper">Hyperparameters</button>
+          </div>
+          <div class="buttons has-addons dataset-buttons" id="rob-datasets"></div>
+        </div>
+        <div id="chart-robustness" class="chart"></div>
+        <p class="caption" id="rob-caption"></p>
+      </div>
+
+      <!-- scalability -->
+      <div class="tab-pane" id="t-scalability" style="display:none">
+        <div class="controls">
+          <div class="buttons has-addons" data-group="time-level">
+            <button class="button is-small is-selected is-dark" data-value="client">Client-level request</button>
+            <button class="button is-small" data-value="node">Node-level request</button>
+          </div>
+        </div>
+        <div id="chart-time" class="chart"></div>
+        <p class="caption">Median time per request (log scale): unlearning against closed-form retraining of all
+          clients, under the PAGE protocol. In that protocol a node-level request deletes 10% of the nodes of
+          <em>every</em> client, so every client recomputes its statistics and unlearning costs about as much as
+          retraining; a request that touches one client is faster (locality study below), and a client-level request
+          only removes statistics at the server.</p>
+        <div id="table-cost" class="table-container mt-4"></div>
+        <h4 class="title is-5 mt-5">Locality study</h4>
+        <div class="controls">
+          <div class="buttons has-addons" data-group="loc-view">
+            <button class="button is-small is-selected is-dark" data-value="rows">Rows that change</button>
+            <button class="button is-small" data-value="region">Neighbourhood read</button>
+            <button class="button is-small" data-value="speedup_local_vs_full">Local vs full speed-up</button>
+          </div>
+        </div>
+        <div id="chart-locality" class="chart"></div>
+        <p class="caption" id="loc-caption"></p>
+      </div>
+
+      <!-- privacy -->
+      <div class="tab-pane" id="t-privacy" style="display:none">
+        <div id="chart-cap" class="chart"></div>
+        <p class="caption">Membership attack by the server on one client's training nodes, with the feature dimension
+          capped at half the training nodes: on that client's statistics (per-client view) and on the sum over all
+          clients (secure-aggregation view). 0.5 is chance.</p>
+        <div class="columns mt-4">
+          <div class="column"><div id="chart-fedavg" class="chart"></div></div>
+          <div class="column"><div id="chart-dp" class="chart"></div></div>
+        </div>
+        <p class="caption">Left: attack on FedAvg updates over training rounds, against the attack on our statistics
+          (dashed). Right: test accuracy when the statistics are released with differential privacy.</p>
+        <div id="table-membership" class="table-container mt-4"></div>
+      </div>
+
+      <!-- representation space -->
+      <div class="tab-pane" id="t-representation" style="display:none">
+        <div class="controls">
+          <div class="buttons has-addons dataset-buttons" id="emb-datasets"></div>
+          <div class="buttons has-addons" data-group="emb-space">
+            <button class="button is-small is-selected is-dark" data-value="prediction">Prediction space (W&#7488;&phi;)</button>
+            <button class="button is-small" data-value="feature">Feature space (&phi;)</button>
+          </div>
+        </div>
+        <div class="buttons has-addons state-buttons" id="emb-states"></div>
+        <div id="chart-embedding" class="chart chart-tall"></div>
+        <p class="caption" id="emb-caption"></p>
+      </div>
+
+      <!-- motivation -->
+      <div class="tab-pane" id="t-motivation" style="display:none">
+        <div class="controls"><div class="buttons has-addons dataset-buttons" id="mot-datasets"></div></div>
+        <div id="chart-motivation" class="chart"></div>
+        <p class="caption" id="mot-caption"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== bibtex -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i><span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <!-- TODO: replace after the review period -->
+      <pre id="bibtex-code"><code>@inproceedings{anonymous2027exactfgu,
+  title     = {Exact Federated Graph Unlearning with a Closed-Form Learner and Two Gates},
+  author    = {Anonymous Authors},
+  booktitle = {Proceedings on Privacy Enhancing Technologies (PoPETs)},
+  year      = {2027}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+              which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
