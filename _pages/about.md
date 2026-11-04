@@ -26,7 +26,8 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am a Marie Skłodowska-Curie doctoral candidate at the [University of Naples Federico II](https://www.unina.it/) (UNINA), Italy, in the MSCA Doctoral Network [TUAI (Towards an Understanding of Artificial Intelligence)](https://tuai.eu/). My doctoral project, [DC9: Decentralised Graph Neural Networks: Adaptation, Training and Interpretability in Federated Environments](https://tuai.eu/doctoral-candidates/dc9), is supervised by Prof. Salvatore Cuomo (UNINA), with co-supervisors Prof. David Camacho (UPM), Prof. Shen Yin (NTNU) and Prof. Dariusz Mrozek (SUT).
+I am a Marie Skłodowska-Curie doctoral candidate at the [University of Naples Federico II](https://www.unina.it/) (UNINA), Italy, in the MSCA Doctoral Network [TUAI (Towards an Understanding of Artificial Intelligence)](https://tuai.eu/). My doctoral project, [DC9: Decentralised Graph Neural Networks: Adaptation, Training and Interpretability in Federated Environments](https://tuai.eu/doctoral-candidates/dc9), is supervised by Prof. Francesco Piccialli (UNINA), with co-supervisors Prof. David Camacho (UPM), Prof. Shen Yin (NTNU) and Prof. Dariusz Mrozek (SUT).
+
 
 **Research interests:** machine unlearning, federated learning and graph neural networks, with a broader interest in trustworthy AI, distributed systems and reinforcement learning.
 
