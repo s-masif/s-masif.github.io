@@ -2,7 +2,6 @@
 layout: about
 title: about
 permalink: /
-subtitle: Marie Skłodowska-Curie Doctoral Candidate, <a href='https://www.unina.it/' target='_blank'>University of Naples Federico II</a>, Italy
 
 profile:
   align: right
