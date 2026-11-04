@@ -1,0 +1,19 @@
+/* Additions for the results sections (the template's index.css is unchanged). */
+.overview-img { display: block; max-width: 760px; width: 100%; margin: 1rem auto; }
+.method-box { height: 100%; font-size: 0.95rem; }
+.method-box .heading { font-weight: 700; color: #3273dc; }
+.key-number .value { font-size: 2.1rem; font-weight: 700; line-height: 1.1; font-family: 'Google Sans', sans-serif; }
+.key-number .label { font-size: 0.85rem; color: #555; }
+.result-tabs ul { flex-wrap: wrap; }
+.tab-pane { background: #fff; border-radius: 6px; padding: 1.25rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; justify-content: center; margin-bottom: 0.75rem; }
+.controls .buttons { margin-bottom: 0 !important; }
+.state-buttons { justify-content: center; }
+.chart { width: 100%; min-height: 380px; }
+.chart-tall { min-height: 560px; }
+.caption { font-size: 0.85rem; color: #555; text-align: center; margin: 0.25rem auto 0; max-width: 820px; }
+.unavailable { padding: 2.5rem 1rem; text-align: center; color: #888; font-style: italic; border: 1px dashed #ccc; border-radius: 6px; }
+table.results { font-size: 0.85rem; margin: 0 auto; }
+table.results th, table.results td { text-align: center !important; white-space: nowrap; }
+table.results td.ours { font-weight: 700; color: #3273dc; }
+@media (prefers-color-scheme: dark) { .tab-pane { background: #fff; } }

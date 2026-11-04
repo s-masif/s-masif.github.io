@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://s-masif.github.io/sitemap.xml
