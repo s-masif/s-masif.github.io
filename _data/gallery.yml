@@ -1,0 +1,18 @@
+# Photo gallery shown at /gallery/.
+# To add photos:
+#   1. Put the image in assets/img/gallery/ (JPG or PNG; around 1600 px wide is plenty).
+#   2. Add it under an album below. Newest albums first.
+#
+# Example:
+#
+# albums:
+#   - title: FLICS 2026
+#     date: June 2026
+#     location: Valencia, Spain
+#     photos:
+#       - file: gallery/flics2026-talk.jpg
+#         caption: Presenting at FLICS 2026
+#       - file: gallery/flics2026-city.jpg
+#         caption: Old town of Valencia
+
+albums: []

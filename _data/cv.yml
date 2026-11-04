@@ -1,0 +1,118 @@
+cv:
+  name: S M Asiful Huda
+  label: Marie Skłodowska-Curie Doctoral Candidate
+  email: smasiful.huda@unina.it
+  location: Naples, Italy
+  image: ""
+  summary: Doctoral candidate in the MSCA Doctoral Network TUAI, working on federated learning, graph neural networks and machine unlearning.
+
+  social_networks:
+    - network: X
+      username: HUDASMAsiful1
+    - network: GitHub
+      username: s-masif
+    - network: LinkedIn
+      username: s-m-asiful-huda-538932126
+
+  sections:
+    Education:
+      - institution: University of Naples Federico II
+        location: Naples, Italy
+        url: https://www.unina.it/
+        area: Doctoral research (MSCA Doctoral Network TUAI, DC9)
+        studyType: PhD candidate
+        start_date: 2025
+        highlights:
+          - "Project: Decentralised Graph Neural Networks: Adaptation, Training and Interpretability in Federated Environments."
+          - "Supervisor: Prof. Salvatore Cuomo. Co-supervisors: Prof. David Camacho (UPM), Prof. Shen Yin (NTNU), Prof. Dariusz Mrozek (SUT)."
+
+      - institution: Chosun University
+        location: Gwangju, South Korea
+        url: https://eng.chosun.ac.kr/eng/index.do
+        area: Computer Engineering
+        studyType: M.E.
+        start_date: 2021
+        end_date: 2023
+        score: "CGPA 4.43/4.50"
+        highlights:
+          - "Thesis: Reinforcement learning-based offloading in unmanned aerial vehicle-aided edge computing systems."
+          - "Supervisor: Prof. Sangman Moh, Mobile Computing Lab."
+
+      - institution: East West University
+        location: Dhaka, Bangladesh
+        area: Computer Science
+        studyType: B.Sc.
+        start_date: 2015
+        end_date: 2019
+        highlights:
+          - "Thesis: An improved approach for detection of diabetic retinopathy using feature importance and machine learning algorithms."
+          - "Supervisor: Md. Shamsujjoha."
+
+    Experience:
+      - company: Gwangju Institute of Science and Technology (GIST)
+        position: Research Associate
+        location: Gwangju, South Korea
+        start_date: 2024
+        end_date: 2025
+        highlights:
+          - ML-Enhanced Coil Design for Wireless Power Transfer in Biomedical Implants.
+          - "TEMPRES-SMP: Hybrid Prophet-LSTM-XGBoost Model for Price Forecasting."
+          - A Stacked Prophet-GRU-CatBoost Framework for Precise Hourly System Marginal Price Forecasting for Smart Grid Operations.
+          - TimeGPT-XGBoost based LMP Forecasting for Convergence Bidding.
+
+      - company: HT Core Co., Ltd.
+        position: Researcher
+        location: Gwangju, South Korea
+        start_date: 2023
+        end_date: 2024
+        summary: Development of an XR-based multi-user training platform for clinical practice training (C#, Unity3D, AR glasses).
+
+      - company: Chosun University, Mobile Computing Lab
+        position: Graduate Research Assistant
+        location: Gwangju, South Korea
+        start_date: 2021
+        end_date: 2023
+        summary: Reinforcement learning-based computation offloading for UAV-assisted edge computing.
+
+      - company: Technology and Business Solutions Ltd.
+        position: Software Engineer
+        location: Dhaka, Bangladesh
+        start_date: 2020
+        end_date: 2021
+        summary: Development of attendance, leave and payroll components for an HR management web application (ASP.NET MVC, C#).
+
+    Awards:
+      - title: BK21 Fellow and Fully Funded Research Scholarship (KRW 21,068,000)
+        date: 2021 – 2023
+        awarder: Brain Korea 21 (BK21) Program, National Research Foundation of Korea, Ministry of Education
+      - title: Top 15% Excellent Student Scholarship (KRW 4,950,000)
+        date: 2021 – 2022
+        awarder: Chosun University, Gwangju, South Korea
+      - title: Travel Grant for ICSCC 2019 (USD 750)
+        date: 2019
+        awarder: East West University, Dhaka, Bangladesh
+
+    Skills:
+      - name: Machine learning
+        icon: fa-solid fa-brain
+        keywords: "Federated learning, graph neural networks, deep learning (CNN, RNN, LSTM), reinforcement learning (Q-learning, DQN, A3C), time series modelling (ARIMA, LSTM, Prophet), GANs, model interpretability (SHAP, LIME)"
+      - name: Tools and frameworks
+        icon: fa-solid fa-screwdriver-wrench
+        keywords: "Python, PyTorch, TensorFlow, scikit-learn, Pandas, NumPy, Matplotlib"
+      - name: Programming
+        icon: fa-solid fa-code
+        keywords: "Python, C#, C++, SQL, LaTeX"
+      - name: Web and databases
+        icon: fa-solid fa-database
+        keywords: "HTML, CSS, JavaScript, .NET, MVC, RESTful APIs, MS SQL, PostgreSQL"
+
+    Languages:
+      - name: English
+        summary: "Fluent (IELTS 7.0, 2025)"
+      - name: Bengali
+        summary: "Native speaker"
+
+    Interests:
+      - name: Research
+        icon: fa-solid fa-tag
+        keywords: "Machine unlearning, federated learning, graph neural networks, trustworthy AI, distributed systems"
