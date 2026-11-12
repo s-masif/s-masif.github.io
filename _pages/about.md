@@ -5,7 +5,7 @@ permalink: /
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: img_1_1794511029650.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>MSCA Doctoral Network <a href="https://tuai.eu/doctoral-candidates/dc9" target="_blank">TUAI</a>, DC9</p>
