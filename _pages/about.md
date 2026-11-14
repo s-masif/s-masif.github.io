@@ -22,19 +22,23 @@ announcements:
 
 latest_posts:
   enabled: false
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
+  scrollable: true
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am a Marie Skłodowska-Curie doctoral candidate at the [University of Naples Federico II](https://www.unina.it/) (UNINA), Italy, in the MSCA Doctoral Network [TUAI (Towards an Understanding of Artificial Intelligence)](https://tuai.eu/). My doctoral project, [DC9: Decentralised Graph Neural Networks: Adaptation, Training and Interpretability in Federated Environments](https://tuai.eu/doctoral-candidates/dc9), is supervised by Prof. Francesco Piccialli (UNINA), with co-supervisors Prof. David Camacho (UPM), Prof. Shen Yin (NTNU) and Prof. Dariusz Mrozek (SUT).
+👋 Hi, I am a PhD student at the [University of Naples Federico II](https://www.unina.it/) (UNINA), Italy, as part of the Marie Skłodowska-Curie Doctoral Network [TUAI (Towards an Understanding of Artificial Intelligence)](https://tuai.eu/). My doctoral project, [DC9: Decentralised Graph Neural Networks: Adaptation, Training and Interpretability in Federated Environments](https://tuai.eu/doctoral-candidates/dc9), is supervised by Prof. Francesco Piccialli (UNINA), with co-supervisors Prof. David Camacho (UPM), Prof. Shen Yin (NTNU), and Prof. Dariusz Mrozek (SUT).
 
-My long-term research goal is to advance **trustworthy AI systems that can both learn and unlearn efficiently while remaining robust and reliable**. As AI models increasingly rely on large-scale data, they must also be able to forget specific information when necessary, whether due to privacy regulations (e.g., GDPR), harmful or copyrighted content, or poisoned and outdated data. These challenges become particularly complex in **decentralised and relational settings**, where data is distributed across institutions (e.g., hospitals and energy providers) and interconnected as graphs. I am interested in enabling collaborative learning and unlearning while ensuring transparency, accountability, and reliability.
+My research focuses on developing **trustworthy AI systems that can learn, adapt, and unlearn efficiently while remaining robust and reliable**. I am particularly interested in addressing these challenges in **decentralised and graph-based settings**, where data is distributed across different organisations and interconnected as graphs. My work explores collaborative learning and unlearning while considering privacy, transparency, and model reliability.
 
-**My core research areas include:**
-- **Federated and Decentralised Learning** — collaborative training across heterogeneous clients, aggregation strategies, and learning under non-IID data
-- **Graph Neural Networks** — federated GNNs, learning over distributed graph-structured data, and interpretability of graph models
-- **Machine Unlearning** — efficient and verifiable removal of data from trained models, especially in federated and graph settings
-- **Trustworthy and Privacy-Preserving AI** — explainability, robustness, and privacy guarantees for decentralised systems
-- **Applications** in healthcare, smart grids, communication networks, and edge computing
+🔬 **My research interests include:**
+- **Federated and Decentralised Learning** — collaborative learning across distributed and heterogeneous data sources.
+- **Graph Neural Networks** — learning and interpreting graph-structured data in decentralised environments.
+- **Machine Unlearning and Trustworthy AI** — efficient and verifiable data removal, explainability, robustness, and privacy-preserving learning.
+- **AI for Science (AI4Science)** — exploring how AI can support scientific discovery and address challenges across different disciplines.
+- **Applications** in healthcare, smart grids, communication networks, and edge computing.
 
-Before enrolling into PhD, I was a Research Associate at the Gwangju Institute of Science and Technology (GIST), South Korea, working on machine learning for wireless power transfer and electricity price forecasting, and a Researcher at HT Core Co., Ltd., developing an XR-based training platform for clinical practice. I received my M.E. in Computer Engineering from [Chosun University](https://eng.chosun.ac.kr/eng/index.do), South Korea, in 2023, where I worked on reinforcement learning-based computation offloading for UAV-aided edge computing under the supervision of Prof. [Sangman Moh](https://scholar.google.com/citations?user=6kVQbNIAAAAJ&hl=en). I received my B.Sc. in Computer Science from East West University, Bangladesh.
+Before starting my PhD, I worked as a Research Associate at the Gwangju Institute of Science and Technology (GIST), South Korea, on machine learning applications in wireless power transfer and electricity price forecasting. I also worked as a Researcher at HT Core Co., Ltd., developing an XR-based training platform for clinical practice.
+
+I received my M.E. in Computer Engineering from [Chosun University](https://eng.chosun.ac.kr/eng/index.do), South Korea, in 2023, where I worked on reinforcement learning-based computation offloading for UAV-aided edge computing under the supervision of Prof. [Sangman Moh](https://scholar.google.com/citations?user=6kVQbNIAAAAJ&hl=en). I received my B.Sc. in Computer Science from East West University, Bangladesh.
+
+🤝 I am open to research discussions and collaborations. Feel free to reach out for a chat!
