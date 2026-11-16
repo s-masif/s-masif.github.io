@@ -37,7 +37,7 @@ My research focuses on developing **trustworthy AI systems that can learn, adapt
 - **AI for Science (AI4Science)** — exploring how AI can support scientific discovery and address challenges across different disciplines.
 - **Applications** in healthcare, smart grids, communication networks, and edge computing.
 
-Before starting my PhD, I worked as a Research Associate at the Gwangju Institute of Science and Technology (GIST), South Korea, on machine learning applications in wireless power transfer and electricity price forecasting. I also worked as a Researcher at HT Core Co., Ltd., developing an XR-based training platform for clinical practice.
+⬅️ Before starting my PhD, I worked as a Research Associate at the Gwangju Institute of Science and Technology (GIST), South Korea, on machine learning applications in wireless power transfer and electricity price forecasting. I also worked as a Researcher at HT Core Co., Ltd., developing an XR-based training platform for clinical practice.
 
 I received my M.E. in Computer Engineering from [Chosun University](https://eng.chosun.ac.kr/eng/index.do), South Korea, in 2023, where I worked on reinforcement learning-based computation offloading for UAV-aided edge computing under the supervision of Prof. [Sangman Moh](https://scholar.google.com/citations?user=6kVQbNIAAAAJ&hl=en). I received my B.Sc. in Computer Science from East West University, Bangladesh.
 
